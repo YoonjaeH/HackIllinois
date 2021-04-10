@@ -1,31 +1,12 @@
+*{
+  margin:0;
+  padding:0;
+}
 .App {
   text-align: center;
+  width:auto;
+  height: auto;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 #header {
   margin: 2%;
 }
@@ -39,14 +20,14 @@
   margin-top: 1.2rem;
   margin-bottom: 1.2rem;
   padding: 1rem;
-
-  background-color: #cccccc;
+  color:#fff9fb;
+  /* background-color: #cccccc; */
   border-radius: 15px;
 }
 
 #header p {
-  border-left: #cccccc solid 0.5rem;
-  border-right: #cccccc solid 0.5rem;
+  /* border-left: #cccccc solid 0.5rem;
+  border-right: #cccccc solid 0.5rem; */
   padding: 0.5rem 1rem;
   font-size: 1rem;
   color: #cccccc;
@@ -55,28 +36,27 @@
 #app-container {
   /* background-color: #1c2942; */
   width: 100%;
-  display: flex;
-  flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
   /* color: white; */
-  margin-bottom: 5rem;
 }
 
 #map {
   background-color: #1c2942;
-  width: 80%;
+  width: 70%;
   color: white;
   border-radius: 15px;
+  position:'relative';
 }
 
 #space {
+  margin-left:75%;
   width: 2%;
 }
 
 #list {
-  background-color: #1c2942;
+  margin-left:75%;
   width: 18%;
-  color: white;
+  color: #fff9fb;
   border-radius: 15px;
 }

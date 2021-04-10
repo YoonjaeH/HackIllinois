@@ -1,30 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import React,{useState, useEffect} from 'react';
+import { Map, GoogleApiWrapper } from 'google-maps-react';
 
-function App() {
+function App({google}) {
+   useEffect(() => { document.body.style.backgroundColor = '#252627' }, [])
   return (
-    <div className="App">
+    <div className="App"> 
       <div id="header">
         <h4>Number of Hate Crimes againt Racial Minorities in U.S. by States</h4>
         <p id="description">
-          short description goes here !!
+          Hackathon
         </p>
       </div>
       <div id="app-container">
-        <table>
-          <tr>
-            <td id="map">
-              map comes here!
-            </td>
-            <td id="space"></td>
-            <td id="list">
+           <div id="map">
+              <Map 
+                google = {google}
+                zoom = {5}
+                containerStyle = {{left: 10, right:0,position: 'absolute', width:'70%', height : '72%'}}
+                initialCenter={
+                  {
+                    lat:39.8097343, 
+                    lng: -98.5556199
+                  }
+                }>
+
+              </Map>
+            </div>
+            <div id="space"></div>
+            <div id="list">
               list in descending order here!
-            </td>
-          </tr>
-        </table>
+            </div>
+            
       </div>
     </div>
   );
 }
 
-export default App;
+// export default App;
+export default GoogleApiWrapper({
+  apiKey:'AIzaSyDanli18HUvTuLM8XdREveskQMPF5EI3ng'
+})(App);
