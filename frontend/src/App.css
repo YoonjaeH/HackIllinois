@@ -13,17 +13,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +24,59 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#header {
+  margin: 2%;
+}
+
+#header h4 {
+  display: block;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 2rem;
+  line-height: 1.35;
+  letter-spacing: -.08rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  padding: 1rem;
+
+  background-color: #cccccc;
+  border-radius: 15px;
+}
+
+#header p {
+  border-left: #cccccc solid 0.5rem;
+  border-right: #cccccc solid 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #cccccc;
+}
+
+#app-container {
+  /* background-color: #1c2942; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  /* color: white; */
+  margin-bottom: 5rem;
+}
+
+#map {
+  background-color: #1c2942;
+  width: 80%;
+  color: white;
+  border-radius: 15px;
+}
+
+#space {
+  width: 2%;
+}
+
+#list {
+  background-color: #1c2942;
+  width: 18%;
+  color: white;
+  border-radius: 15px;
 }

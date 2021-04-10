@@ -1,9 +1,9 @@
 ## Discrimination_Prediction
 
-# Project Discription:
+# Project Discription
 Collect racial discrimination-related event instances with Google News API to predict casualty and location of future possible discrimanation-related events. We make a visualization model of past events and forecast predictions.
 
-# Authors:
+# Authors
 - Soohyuck Cho
 - Yoonjae Hwang
 - Jongwoo Jeon
