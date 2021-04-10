@@ -2,6 +2,7 @@ from constants import *
 import numpy as np
 import pandas as pd
 from datetime import datetime
+from typing import Tuple
 
 # Data processing/parsing helpers
 def get_state_code(data: str) -> int:
@@ -28,7 +29,7 @@ def get_state_code(data: str) -> int:
 def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False) -> np.array:
     """
     Convert csv data to matrix of shape(D, US_NUM_STATES),
-    where D = latest date - first date + 1 in days.
+    where D = latest date - earliest date + 1 in days.
 
     Params
     ------
@@ -62,5 +63,4 @@ def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False) -
 
     return ret_matrix
 
-
-    
+# def get_x_y(data: pd.DataFrame, matrix: np.array, lookback: int = 10) -> Tuple[np.array, np.array]:

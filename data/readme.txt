@@ -2,7 +2,7 @@ Please follow the format of the 'data_format.csv' in the current directory.
 
 Data type of each columns should follow as below:
 
-- Date: pd.datetime or datetime.datetime
+- Date: pd.Timestamp or datetime.datetime
 - State: str
 - Casualties: int
 
