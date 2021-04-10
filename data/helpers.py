@@ -61,4 +61,6 @@ def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False) -
         ret_matrix[idx, state] += weight
 
     return ret_matrix
+
+
     
