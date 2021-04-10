@@ -1,3 +1,4 @@
+# Data parsing constants
 US_STATE_CODE_DICT = {'alabama': 0,
                     'alaska': 1,
                     'arizona': 2,
@@ -98,3 +99,5 @@ US_STATE_CODE_DICT = {'alabama': 0,
                     'wv': 47,
                     'wi': 48,
                     'wy': 49}
+
+US_NUM_STATES = 50
