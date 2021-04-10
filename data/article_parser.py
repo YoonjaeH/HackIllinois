@@ -8,7 +8,10 @@ KEY_WORDS=[
 'hatred',
 'racism',
 'asian hatred',
-'racial'
+'racial',
+'minorities',
+'asian',
+'crime'
 ]
 
 '''
