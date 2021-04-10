@@ -129,5 +129,4 @@ dmypy.json
 .pyre/
 
 # User add ons
-test.ipynb
 credentials.py
