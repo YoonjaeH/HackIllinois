@@ -33,3 +33,6 @@ The dashboard enables intuitive comparison of the expected occurences and actual
 With the silder on top of the map, user can easily adjust the timeframe to be looked into.
 
 The expected and actual number of occurences for selected week is shown in the chart at right in alphabetic order.
+
+## Try it by yourself!
+Click [Here](https://jihoonkang0829.github.io/Discrimination_Prediction/) to try out our dashboard by yourself.
