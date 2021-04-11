@@ -1,6 +1,6 @@
 // State -> [latitude, longitude]
 
-const GEO_CENTER = {
+const GeoCenter = {
     "Alabama" :             [32.78, 86.83],
     "Alaska" :              [64.07, 152.28],
     "Arizona" :             [34.27, 111.66],
@@ -32,7 +32,7 @@ const GEO_CENTER = {
     "Nevada" :              [39.33, 116.63],
     "New Hampshire" :       [43.68, 71.58],
     "New Jersey" :          [40.19, 74.67],
-    "New Mexico" :          [34.41, 103.11],
+    "New Mexico" :          [34.41, 106.11],
     "New York" :            [42.95, 75.53],
     "North Carolina" :      [35.56, 79.39],
     "North Dakota" :        [47.45, 100.47],
@@ -42,7 +42,7 @@ const GEO_CENTER = {
     "Pennsylvania" :        [40.88, 77.80],
     "Rhode Island" :        [41.68, 71.56],
     "South Carolina" :      [33.92, 80.90],
-    "South Dakota" :        [44.44, 110.27],
+    "South Dakota" :        [44.44, 100.27],
     "Tennessee" :           [35.86, 86.35],
     "Texas" :               [31.48, 99.33],
     "Utah" :                [39.31, 111.67],
@@ -54,19 +54,4 @@ const GEO_CENTER = {
     "Wyoming" :             [43.00, 107.55]
 };
 
-/**
- * Returns the radious and the hue of based on 
- * the prediction percentage of the state.
- * @param {Float} p the prediction percentage value between 0 and 1
- * @returns {Array} the radious and hue of the circle
- */
-function pred_rad_and_hue(p) {
-    r = (2 * p + 1) * 10000;
-
-    r_comp = Math.floor(255 * (1 - p)).toString(16);
-    g_comp = Math.floor(255 * p).toString(16);
-    b_comp = "00";
-    h = r_comp + g_comp + b_comp;
-
-    return { "rad" : r, "hue" : h}
-}
+export default GeoCenter;
