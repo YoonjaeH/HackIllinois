@@ -33,12 +33,22 @@ function pred_rad_and_hue(a, p) {
   let g_comp = "";
   let r_comp = "";
   const b_comp = "00";
-  if (a === 0) {
-    return { "rad" : 20000, "hue" : "FF0000"}
-  } else if (p > a) {
-    s = (p - a) / a;
-    if (s > 1) {
-      s = 1;
+  if (p >= a) {
+    if (a === 0) {
+      if (p === 0) {
+        return { "rad" : 20000, "hue" : "00FF00"}
+      } else {
+        s = p/3
+        if(s > 1 )
+        {
+          s = 1
+        }
+      }
+    } else {
+      s = (p - a) / a;
+      if (s > 1) {
+        s = 1;
+      }
     }
     g_comp = Math.abs(Math.floor(255 * (1 - s))).toString(16);
     r_comp = Math.abs(Math.floor(255 * s)).toString(16);
@@ -151,7 +161,7 @@ function App({google}) {
       <div id="header">
         <h4>Number of Hate Crimes againt Racial Minorities in U.S. by States</h4>
         <p id="description">
-          Hackathon
+          HackIllinois 2021
         </p>
       </div>
       <div id="app-container">
