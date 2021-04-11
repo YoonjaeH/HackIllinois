@@ -34,7 +34,7 @@ function App({google}) {
               <Map 
                 google = {google}
                 zoom = {5}
-                containerStyle = {{left: 10, right:0,position: 'absolute', width:'70%', height : '72%'}}
+                containerStyle = {{left: '2%', right:0,position: 'absolute', width:'70%', height : '72%'}}
                 initialCenter={
                   {
                     lat:39.8097343, 
