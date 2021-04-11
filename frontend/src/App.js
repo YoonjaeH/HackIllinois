@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     overflow: 'auto',
-    height: "68vh"
+    height: "60vh",
+    backgroundColor : '#202020'
   },
 }));
 
@@ -55,7 +56,7 @@ function App({google}) {
             </div>
             <div id="space"></div>
             <div id="list">
-              <h4>Past Occurence</h4>
+              <h4 style={{marginBottom: '1rem', fontSize: '30px'}}>Past Occurence</h4>
               <List  className = {classes.root}>
                 {test.map(({state, number})=>(
                   <ListItem key ={state}>
