@@ -255,3 +255,15 @@ US_STATE_ABBR = ['ala.',
                 'wyo.']
 
 US_NUM_STATES = 50
+
+KEY_WORDS=[
+'discrimination',
+'hate',
+'hatred',
+'racism',
+'asian hatred',
+'racial',
+'minorities',
+'asian',
+'crime'
+]

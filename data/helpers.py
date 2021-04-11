@@ -66,6 +66,9 @@ def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False) -
     data: pd.DataFrame
         input data from csv file
 
+    weight_casualty: bool
+        boolean option to weight matrix by casualty of the event or not. Default is False.
+
     Returns
     -------
     np.array:

@@ -1,8 +1,25 @@
 import './App.css';
 import React,{useState, useEffect} from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Circle } from 'google-maps-react';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
+
+const test = [{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},
+{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},
+{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},]
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: 'relative',
+    overflow: 'auto',
+    height: "71vh"
+  },
+}));
 
 function App({google}) {
+  const classes = useStyles();
    useEffect(() => { document.body.style.backgroundColor = '#252627' }, [])
   return (
     <div className="App"> 
@@ -17,19 +34,31 @@ function App({google}) {
               <Map 
                 google = {google}
                 zoom = {5}
-                containerStyle = {{left: 10, right:0,position: 'absolute', width:'70%', height : '72%'}}
+                containerStyle = {{left: '2%', right:0,position: 'absolute', width:'70%', height : '72%'}}
                 initialCenter={
                   {
                     lat:39.8097343, 
                     lng: -98.5556199
                   }
                 }>
-
+                  <Circle radius ={30000} 
+                  center={{lat:39.7010784, lng: -90.4740999}}
+                  strokeColor='transparent'
+                  strokeOpacity={0}
+                  strokeWeight={5}
+                  fillColor='red'
+                  fillOpacity={0.6}/>
               </Map>
             </div>
             <div id="space"></div>
             <div id="list">
-              list in descending order here!
+              <List  className = {classes.root}>
+                {test.map(({state, number})=>(
+                  <ListItem key ={state}>
+                    <ListItemText primary={state + ": " + number}/>
+                  </ListItem>
+                ))}
+              </List>
             </div>
             
       </div>
