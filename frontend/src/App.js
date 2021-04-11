@@ -170,7 +170,7 @@ function App({google}) {
               </Map>
               <Slider
                 className = {classes.slider}
-                defaultValue={actualkeys.length - 1}
+                defaultValue={(actualkeys.length - 1) * 7}
                 valueLabelFormat = {value => nextDay(actualStartDate , value)}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
