@@ -9,10 +9,6 @@ import actualdata from './data/actual_data.json'
 import predictdata from './data/predict_data.json'
 import Slider from '@material-ui/core/Slider';
 import GeoCenter from './const'
-const test = [{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},
-{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},
-{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},{"state":"Alaska", "number":12},]
-
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
@@ -95,11 +91,12 @@ function App({google}) {
   const actualEndDate = convertToKey(actualkeys[actualkeys.length - 1])
   const predictStartDate = convertToKey(predictkeys[0])
   const predictEndDate = convertToKey(actualkeys[predictkeys.length - 1])
-   useEffect(() => { console.log(mapArray); document.body.style.backgroundColor = '#252627'}, [])
+   useEffect(() => {  document.body.style.backgroundColor = '#252627'}, [])
 
    const handleChange = (event, newValue)=>{
       const actualObj = actualdata[nextDay(actualStartDate, newValue)]
       const predictObj = actualdata[nextDay(predictStartDate, newValue)]
+      console.log(actualObj)
       const circleResult = Object.keys(actualObj).map((value, index, array)=>{
         const predictionError = (Math.abs((actualObj[value]+1) - (predictObj[value]+1)))/(actualObj[value]+1)
         const radHue = pred_rad_and_hue(predictionError)
@@ -117,7 +114,6 @@ function App({google}) {
       const listResult = Object.keys(actualObj).map((value, index, array)=>{
         const predictionError = (Math.abs(actualObj[value]+1 - (predictObj[value]+1)))/(actualObj[value]+1)
         const radHue = pred_rad_and_hue(predictionError)
-        console.log(radHue, predictionError)
         return {"state":value, "prediction": predictObj[value], "actual" : actualObj[value], "rad":radHue['rad'], "hue":radHue['hue']}
       })
       setMapArray(circleResult)
@@ -151,11 +147,11 @@ function App({google}) {
                 valueLabelFormat = {value => nextDay(actualStartDate , value)}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
-                step={1}
+                step={7}
                 marks
                 onChange = {handleChange}
                 min={0}
-                max={actualkeys.length - 1}
+                max={(actualkeys.length - 1) * 7}
               />
             </div>
             <div id="space"></div>
