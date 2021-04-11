@@ -27,7 +27,7 @@ We create a recurrent model that predicts the following week's hate crime occure
     * Implemented [PyTorch](https://pytorch.org) to create GRU model that predicts the number of hate crime occurences in each states.
 
 ## Dashboard Visualization
-![dashboard](screenshot.PNG)
+<!-- ![dashboard](screenshot.PNG) -->
 The dashboard enables intuitive comparison of the expected occurences and actual occurences. The size of the circle on each states represents the difference in magnitude of the actual weekly crime occurences and the expected weekly crime occurences. If the crime occurence is under-estimated (i.e. expected crime occurences is less than actual occurences), the circle is weighted towards green, thus representing safeness. On the other hand, if the crime occurence is over-estimated(i.e. expected crime occurences is more than actual occurences), the circle is weighted toward red, thus representing danger. If the expected occurence is equal to the actual number, the circle is colored neutral khaki.
 
 With the silder on top of the map, user can easily adjust the timeframe to be looked into.
