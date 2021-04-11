@@ -4,7 +4,7 @@ Data type of each columns should follow as below:
 
 - Date: pd.Timestamp or datetime.datetime
 - State: str
-- Casualties: int
+- Occurences: int
 
 Notes:
 - Data does not have to be sorted
