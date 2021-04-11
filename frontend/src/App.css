@@ -47,6 +47,7 @@
   color: white;
   border-radius: 15px;
   position:'relative';
+  
 }
 
 #space {
@@ -55,8 +56,8 @@
 }
 
 #list {
-  margin-left:75%;
-  width: 18%;
+  margin-left:77%;
+  width: 20%;
   color: #fff9fb;
   border-radius: 15px;
 }
