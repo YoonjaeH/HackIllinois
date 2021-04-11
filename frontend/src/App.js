@@ -95,8 +95,8 @@ function App({google}) {
 
    const handleChange = (event, newValue)=>{
       const actualObj = actualdata[nextDay(actualStartDate, newValue)]
-      const predictObj = actualdata[nextDay(predictStartDate, newValue)]
-      console.log(actualObj)
+      const predictObj = predictdata[nextDay(predictStartDate, newValue)]
+      console.log(actualObj, predictObj)
       const circleResult = Object.keys(actualObj).map((value, index, array)=>{
         const predictionError = (Math.abs((actualObj[value]+1) - (predictObj[value]+1)))/(actualObj[value]+1)
         const radHue = pred_rad_and_hue(predictionError)
