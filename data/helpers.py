@@ -6,7 +6,21 @@ from constants import *
 import numpy as np
 import pandas as pd
 from datetime import datetime
+import torch
+from torch.utils.data import TensorDataset, DataLoader, Dataset
+from sklearn.model_selection import train_test_split
 from typing import Tuple
+
+# Convert Training Data to PyTorch DataLoader
+def get_dataloader(x_data,y_data,batch_size=32):
+    # Convert to Torch Tensors
+    x = torch.from_numpy(x_data).float()
+    y = torch.from_numpy(y_data).long()
+
+    # TensorDataset & Loader
+    dataset = TensorDataset(x,y)
+    loader  = DataLoader(dataset,batch_size=batch_size,shuffle=True,drop_last=True)
+    return loader
 
 # Data processing/parsing helpers
 def get_state_code(data: str) -> int:
@@ -124,11 +138,21 @@ def get_x_y(matrix: np.array, lookback: int = 10) -> (np.array, np.array):
     for i in range(N-lookback):
         x.append(matrix[i:i+lookback])
         y.append(matrix[i+lookback])
-    return x,y
 
+    return np.array(x),np.array(y)
+
+def split_data(x: np.array, y: np.array, test_size=0.25, random_state=32, batch=32):
+    range_ = range(len(y))
+    train_idx,_,_,_ = train_test_split(range_, y,test_size=test_size,random_state=random_state)
+    train_idx,test_idx,_,_ = train_test_split(train_idx, y[train_idx],test_size=test_size,random_state=random_state)
+
+    train_data = get_dataloader(x[train_idx],y[train_idx], batch)
+    test_data = get_dataloader(x[test_idx],y[test_idx], batch)
+
+    return train_data, test_data
 
 if __name__== '__main__':
     df = pd.read_csv('./data_format.csv')
     ret = convert_data_to_matrix(df, True)
-    test_arr = np.zeros((10,50))
-    x,y = get_x_y(test_arr, 8)
+    x,y = get_x_y(ret, 40)
+    train,test = split_data(x,y)
