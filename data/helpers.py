@@ -5,7 +5,7 @@ sys.path.append(parentdir)
 from constants import *
 import numpy as np
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import torch
 from torch.utils.data import TensorDataset, DataLoader, Dataset
 from sklearn.model_selection import train_test_split
@@ -73,7 +73,7 @@ def preprocess(data: pd.DataFrame) -> pd.DataFrame:
 
     return data
 # Model train helpers
-def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False) -> np.array:
+def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False, **kwargs) -> Tuple[np.array, np.array]:
     """
     Convert csv data to matrix of shape(D, US_NUM_STATES),
     where D = latest date - earliest date + 1 in days.
@@ -86,39 +86,49 @@ def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False) -
     weight_casualty: bool
         boolean option to weight matrix by casualty of the event or not. Default is False.
 
+    **kwargs: keyword arguments
+        group_data: bool
+            boolean option to group the data by certain period of days or not
+        group_days: int
+            if group_data, number of days to group the data by
+
     Returns
     -------
     np.array:
         matrix of shape (D, US_NUM_STATES)
+
+    np.array:
+        1D array of shape (D, ). Contains date that each rows of ret_matrix represents.
     """
-    data = preprocess(data)
-    data = data.sort_values('Quarter_start_date')
+    # data = preprocess(data)
+    data['Date'] = pd.to_datetime(data['Date'])
+    data = data.sort_values('Date')
+
     # If data type is pd.Timestamp, convert to datetime.datetime
     if isinstance(data.iloc[0, 0], pd.Timestamp):
-        data['Quarter_start_date'] = data['Quarter_start_date'].dt.to_pydatetime()
+        data['Date'] = data['Date'].dt.to_pydatetime()
+
     start_date, end_date = data.iloc[0, 0], data.iloc[-1, 0]
-    #print(start_date, end_date)
     D = (end_date - start_date).days + 1
-    #print('d = ', D)
+    days_delta = 1
+
+    # If kwargs group_data and group_days are True and valid
+    if 'group_data' in kwargs.keys() and kwargs['group_data'] and \
+        'group_days' in kwargs.keys() and kwargs['group_days'] > 0:
+        days_delta = kwargs['group_days']
+        D = int(np.ceil(D / days_delta))
+
     ret_matrix = np.zeros((D, US_NUM_STATES), dtype = int)
+    date_array = np.array([start_date + timedelta(days = i * days_delta) for i in range(D)])
     for i in range(len(data)):
-        idx = (data.iloc[i, 0] - start_date).days
+        idx = (data.iloc[i, 0] - start_date).days // days_delta
         state = get_state_code(data.iloc[i, 1])
         weight = 1
         if weight_casualty:
             weight = data.iloc[i, 2] if data.iloc[i, 2] > 0 else 0
         ret_matrix[idx, state] += weight
 
-    return ret_matrix
-
-def data_split_sliding_window(x: np.array, y: np.array, lookback: int) -> Tuple[np.array, np.array]:
-    x_data = []
-    y_data = []
-    N = len(x)
-    for index in range(N-lookback):
-        x_data.append(x[index: index + lookback])
-        y_data.append(y[index: index + lookback])
-    return np.array(x_data), np.array(y_data)
+    return ret_matrix, date_array
 
 def get_x_y(matrix: np.array, lookback: int = 10) -> Tuple[np.array, np.array]:
     '''
@@ -173,10 +183,7 @@ def get_article_location(text: str) -> str:
     text = text.lower()
     state_freq_array = np.zeros(US_NUM_STATES, dtype = int)
     for i in range(50):
-        count = 0
-        count += text.count(US_STATE_NAMES[i])
-        count += text.count(US_STATE_POSTAL_CODES[i])
-        count += text.count(US_STATE_ABBR[i])
+        count = text.count(US_STATE_NAMES[i])
         state_freq_array[i] = count
 
     if np.max(state_freq_array) == 0: 
@@ -220,6 +227,11 @@ def is_valid_article(date : datetime, state : str, date_start : datetime, date_e
 
     date_end: datetime.datetime
         article search ending timeframe
+
+    Returns
+    -------
+    bool:
+        boolean value determining whether the article is valid or not
     """
     
     return isinstance(state, str) and date >= date_start and date <= date_end

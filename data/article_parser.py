@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 nyt = NYTAPI(NYT_KEY, parse_dates=True)
 
-date_start = datetime(2019, 1, 1)
+date_start = datetime(2017, 1, 1)
 date_end = datetime.now()
 delta = timedelta(days = 7)
 
@@ -42,13 +42,16 @@ while date_start < date_end:
         )
         for i in range(len(search)):
             article_time, article_url = format_datetime(search[i]['pub_date']), search[i]['web_url']
-            article_text = get_article_text(article_url)
-            article_state = get_article_location(article_text)
-            
-            if is_valid_article(article_time, article_state, format_datetime(date_start), format_datetime(date_delta_added)):
-                article_time = datetime(article_time.year, article_time.month, article_time.day)
-                date_list.append(article_time)
-                state_list.append(article_state)
+            try:
+                article_text = get_article_text(article_url)
+                article_state = get_article_location(article_text)
+                
+                if is_valid_article(article_time, article_state, format_datetime(date_start), format_datetime(date_delta_added)):
+                    article_time = datetime(article_time.year, article_time.month, article_time.day)
+                    date_list.append(article_time)
+                    state_list.append(article_state)
+            except:
+                pass
 
     date_start = date_delta_added
     pbar.update(1)
