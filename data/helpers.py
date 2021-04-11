@@ -262,6 +262,11 @@ def calc_accuracy(pred, y):
     diff_sum = np.abs(torch.sum(torch.sub(pred, y)))
     return 1 if y_sum == 0 else 1 - diff_sum / y_sum
 
+def calc_strict_accuracy(pred, y):
+    total = y.flatten().size(0)
+    correct = (pred.flatten() == y.flatten()).sum().item()
+    return correct / total
+
 if __name__== '__main__':
     df = pd.read_csv('./data_format.csv')
     ret = convert_data_to_matrix(df, True)
