@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "https://jihoonkang0829.github.io/discrimination-prediction",
+  "homepage": "https://jihoonkang0829.github.io/Discrimination_Prediction",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
