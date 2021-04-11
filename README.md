@@ -4,7 +4,7 @@
 With the emergence of the [novel coronavirus](https://www.who.int/csr/don/31-december-2020-sars-cov2-variants/en/), our society has witnessed soar in racial discrimination and hate crime since last year. Despite the governmental authority's continued effort to enforce [the Fourteenth Amendment](https://constitutioncenter.org/interactive-constitution/amendment/amendment-xiv), the law enforcement force is often inefficiently distributed and thus its efficiency in hate crime prevention is diminished. Thus, we propose a model to predict occurences of hate crimes to contribute to the efficient prevention of the hate crimes.
 
 ## Project Description
-We first collect racial discrimination-related event instances with [New York Times API](https://developer.nytimes.com), especially the date, location and the respective occurences of the crimes. Based on the data collected, we train a deep learning model to predict occurences and locations of future possible discrimanation-related events. Our interactive dashboard enable users to instinctively compare the predicted number of crimes and the actual occurences.
+We first collect racial discrimination-related event instances with [New York Times API](https://developer.nytimes.com), especially the date, location and the respective occurences of the crimes. Based on the data collected, we train a deep learning model to predict occurences and locations of future possible discrimanation-related events. Our interactive dashboard enables users to intuitively compare the daily predicted number of crimes to the actual occurences in state levels.
 
 ## Authors
 - Soohyuck Cho
