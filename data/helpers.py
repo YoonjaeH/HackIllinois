@@ -11,6 +11,8 @@ from torch.utils.data import TensorDataset, DataLoader, Dataset
 from sklearn.model_selection import train_test_split
 from typing import Tuple
 from newspaper import Article
+import pytz
+
 
 # Convert Training Data to PyTorch DataLoader
 def get_dataloader(x_data,y_data,batch_size=32):
@@ -151,6 +153,93 @@ def split_data(x: np.array, y: np.array, test_size=0.25, random_state=32, batch=
     test_data = get_dataloader(x[test_idx],y[test_idx], batch)
 
     return train_data, test_data
+
+# Data collecting helpers
+def get_article_location(text: str) -> str:
+    """
+    From the input article text, get most frequent occurence state in state code.
+
+    Params
+    ------
+    text: str
+        article text to find the state
+
+    Returns
+    -------
+    str:
+        state name. Returns None if no state was detected.
+    """
+
+    text = text.lower()
+    state_freq_array = np.zeros(US_NUM_STATES, dtype = int)
+    for i in range(50):
+        count = 0
+        count += text.count(US_STATE_NAMES[i])
+        count += text.count(US_STATE_POSTAL_CODES[i])
+        count += text.count(US_STATE_ABBR[i])
+        state_freq_array[i] = count
+
+    if np.max(state_freq_array) == 0: 
+        return None
+
+    return US_STATE_NAMES[np.argmax(state_freq_array)]
+
+def get_article_text(url: str) -> str:
+    """
+    From the article url, returns the text of the article.html
+
+    Params
+    ------
+    url: str
+        article url string to retrieve the text
+
+    Returns
+    -------
+    str:
+        article text
+    """
+    article = Article(url)
+    article.download()
+    article.parse()
+    return article.text
+
+def is_valid_article(date : datetime, state : str, date_start : datetime, date_end : datetime) -> bool:
+    """
+    Determines if the metadata retrived from the article is valid.
+
+    Params
+    ------
+    date: datetime.datetime
+        Published datetime of the article
+
+    state: str
+        detected state of the incident in the article
+
+    date_start: datetime.datetime
+        article search beginning timeframe
+
+    date_end: datetime.datetime
+        article search ending timeframe
+    """
+    
+    return isinstance(state, str) and date >= date_start and date <= date_end
+
+def format_datetime(dt: datetime) -> datetime:
+    """
+    Helper function to format datetime to truncate time.
+
+    Params
+    ------
+    dt: datetime.datetime
+        datetime object to truncate time
+
+    Returns
+    -------
+    datetime.datetime:
+        time-truncated datetime object
+
+    """
+    return datetime(dt.year, dt.month, dt.day)
 
 if __name__== '__main__':
     df = pd.read_csv('./data_format.csv')
