@@ -1,5 +1,7 @@
 # Discrimination_Prediction
 
+[![Project Demo](https://img.youtube.com/vi/<https://youtu.be/NYq_4VkHCUg>/0.jpg)](https://youtu.be/NYq_4VkHCUg "Project Demo")
+
 ## Authors
 - Soohyuck Cho
 - Yoonjae Hwang
