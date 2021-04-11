@@ -1,6 +1,6 @@
 # Discrimination_Prediction
 
-[![Project Demo](https://img.youtube.com/vi/<https://youtu.be/vVCEHkP2WUQ>/0.jpg)](https://youtu.be/vVCEHkP2WUQ "Project Demo")
+Click [here](https://youtu.be/vVCEHkP2WUQ "Project Demo") to watch our demo on YouTube.
 
 ## Authors
 - Soohyuck Cho
