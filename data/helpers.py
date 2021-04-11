@@ -11,14 +11,14 @@ from torch.utils.data import TensorDataset, DataLoader, Dataset
 from sklearn.model_selection import train_test_split
 from typing import Tuple
 from newspaper import Article
-import pytz
 
 
 # Convert Training Data to PyTorch DataLoader
 def get_dataloader(x_data,y_data,batch_size=32):
     # Convert to Torch Tensors
     x = torch.from_numpy(x_data).float()
-    y = torch.from_numpy(y_data).long()
+    # y = torch.from_numpy(y_data).long()
+    y = torch.from_numpy(y_data).float()
 
     # TensorDataset & Loader
     dataset = TensorDataset(x,y)
@@ -252,6 +252,15 @@ def format_datetime(dt: datetime) -> datetime:
 
     """
     return datetime(dt.year, dt.month, dt.day)
+
+# Model train helpers
+def get_pred(outs):
+    return torch.round(outs)
+
+def calc_accuracy(pred, y):
+    y_sum = np.abs(torch.sum(y))
+    diff_sum = np.abs(torch.sum(torch.sub(pred, y)))
+    return 1 if y_sum == 0 else 1 - diff_sum / y_sum
 
 if __name__== '__main__':
     df = pd.read_csv('./data_format.csv')
