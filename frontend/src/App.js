@@ -23,16 +23,34 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Returns the radious and the hue of based on 
- * the prediction percentage of the state.
- * @param {Float} p the prediction percentage value between 0 and 1
+ * the actual and prediction values of the state.
+ * @param {Float} a the actual value
+ * @param {Float} p the predicted value
  * @returns {Array} the radious and hue of the circle
  */
-function pred_rad_and_hue(p) {
-  const r = (2 * p + 2) * 10000;
-  let g_comp = Math.abs(Math.floor(255 * (1 - p))).toString(16);
-  let r_comp = Math.abs(Math.floor(255 * p)).toString(16);
+function pred_rad_and_hue(a, p) {
+  let s = 1;
+  let g_comp = "";
+  let r_comp = "";
   const b_comp = "00";
-  if(g_comp.length ===3)
+  if (a === 0) {
+    return { "rad" : 20000, "hue" : "FF0000"}
+  } else if (p > a) {
+    s = (p - a) / a;
+    if (s > 1) {
+      s = 1;
+    }
+    g_comp = Math.abs(Math.floor(255 * (1 - s))).toString(16);
+    r_comp = Math.abs(Math.floor(255 * s)).toString(16);
+  } else {
+    s = (a - p) / a;
+    g_comp = Math.abs(Math.floor(255 * s)).toString(16);
+    r_comp = Math.abs(Math.floor(255 * (1 - s))).toString(16);
+  }
+  const r = (2 * s + 2) * 10000;
+  // let g_comp = Math.abs(Math.floor(255 * (1 - p))).toString(16);
+  // let r_comp = Math.abs(Math.floor(255 * p)).toString(16);
+  if(g_comp.length === 3)
   {
     g_comp = g_comp.slice(1)
   }
@@ -52,7 +70,12 @@ function pred_rad_and_hue(p) {
 
 function convertToKey(input) 
 {
-  let [month, date, year] = new Date(input).toLocaleDateString("en-US").split("/")
+  let temp = new Date(input)
+  let month = (temp.getUTCMonth()+1).toString()
+  let date = temp.getUTCDate().toString()
+  let year = temp.getUTCFullYear().toString()
+  console.log(temp)
+  // let [month, date, year] = new Date(input).toDateString("en-US").split("/")
   if(date.length === 1)
   {
     date = '0' + date
@@ -68,7 +91,10 @@ function nextDay(input, value)
 {
   let temp = new Date(input)
   temp.setDate(temp.getDate()+value)
-  let [month, date, year] =  temp.toLocaleDateString("en-US").split("/")
+  let month = (temp.getUTCMonth()+1).toString()
+  let date = temp.getUTCDate().toString()
+  let year = temp.getUTCFullYear().toString()
+  // let [month, date, year] =  temp.toDateString("en-US").split("/")
   if(date.length === 1)
   {
     date = '0' + date
@@ -77,6 +103,7 @@ function nextDay(input, value)
   {
     month = '0' + month
   }
+  console.log(input, value, year, month, date, temp.toString())
   return year + "-" + month + "-" + date
 }
 
@@ -91,15 +118,15 @@ function App({google}) {
   const actualEndDate = convertToKey(actualkeys[actualkeys.length - 1])
   const predictStartDate = convertToKey(predictkeys[0])
   const predictEndDate = convertToKey(actualkeys[predictkeys.length - 1])
-   useEffect(() => {  document.body.style.backgroundColor = '#252627'}, [])
+   useEffect(() => {  console.log(actualStartDate); document.body.style.backgroundColor = '#252627'}, [])
 
    const handleChange = (event, newValue)=>{
       const actualObj = actualdata[nextDay(actualStartDate, newValue)]
       const predictObj = predictdata[nextDay(predictStartDate, newValue)]
       console.log(actualObj, predictObj)
-      const circleResult = Object.keys(actualObj).map((value, index, array)=>{
-        const predictionError = (Math.abs((actualObj[value]+1) - (predictObj[value]+1)))/(actualObj[value]+1)
-        const radHue = pred_rad_and_hue(predictionError)
+      const circleResult = (Object.keys(actualObj)).map((value, index, array)=>{
+        // const predictionError = (Math.abs((actualObj[value]+1) - (predictObj[value]+1)))/(actualObj[value]+1)
+        const radHue = pred_rad_and_hue(actualObj[value], predictObj[value])
         const [lati, longi] = GeoCenter[value]
         return (<Circle radius ={radHue['rad']} 
           center={{lat:lati, lng:(-1*longi)}}
