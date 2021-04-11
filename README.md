@@ -38,3 +38,6 @@ The expected and actual number of occurences for selected week is shown in the c
 
 ## Try it by yourself!
 Click [Here](https://jihoonkang0829.github.io/Discrimination_Prediction/) to try out our dashboard by yourself.
+
+## Disclaimer:
+Due to daylight saving time difference, data from March to October may not be displayed correctly, based on your system datetime configuration. This is a [known](https://github.com/nhn/tui.calendar/issues/423) issue.
