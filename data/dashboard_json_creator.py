@@ -8,7 +8,7 @@ import json
 import torch
 
 data = pd.read_csv('./data/data_from_news.csv')
-matrix, date_list = convert_data_to_matrix(data)
+matrix, date_list = convert_data_to_matrix(data, group_data = True, group_days = 7)
 x, actual = get_x_y(matrix, lookback = 4)
 date_list = date_list[:x.shape[0]]
 
