@@ -6,6 +6,7 @@ from datetime import datetime
 from constants import *
 import json  
 import torch
+import numpy as np
 
 data = pd.read_csv('./data/data_from_news.csv')
 matrix, date_list = convert_data_to_matrix(data, group_data = True, group_days = 7)
@@ -37,3 +38,12 @@ for i in range(len(x)):
 
 with open("./data/predict_data.json", "w") as outfile: 
     json.dump(predict_dict, outfile)
+
+max_dict = {d.strftime('%Y-%m-%d') : {} for d in date_list}
+
+for i, date in enumerate(max_dict.keys()):
+    cur_max = int(np.max(actual[i]))
+    max_dict[date] = cur_max
+
+with open("./data/max_data.json", "w") as outfile: 
+    json.dump(max_dict, outfile)
