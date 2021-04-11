@@ -91,8 +91,41 @@ def convert_data_to_matrix(data: pd.DataFrame,  weight_casualty: bool = False) -
 
     return ret_matrix
 
+def data_split_sliding_window(x: np.array, y: np.array, lookback: int) -> (np.array, np.array):
+    x_data = []
+    y_data = []
+    N = len(x)
+    for index in range(N-lookback):
+        x_data.append(x[index: index + lookback])
+        y_data.append(y[index: index + lookback])
+    return np.array(x_data), np.array(y_data)
+
+def get_x_y(matrix: np.array, lookback: int = 10) -> (np.array, np.array):
+    '''
+    Generate features and label sets from data matrix
+
+    Params
+    ------
+    matrix: np.array
+        Data matrix containing daily report of occurence
+    lookback: Integer
+        Number of previous days to consider in deciding output
+
+    Returns
+    -------
+    (x,y): Tuple(np.array, np.array)
+        Feature and label set given lookback date
+    '''
+    x,y=[],[]
+    N = len(matrix)
+    for i in range(N-lookback):
+        x.append(matrix[i:i+lookback])
+        y.append(matrix[i+lookback])
+    return x,y
+
+
 if __name__== '__main__':
     df = pd.read_csv('./data_format.csv')
     ret = convert_data_to_matrix(df, True)
-    np.savetxt('data.csv', ret, delimiter=',')
-# def get_x_y(data: pd.DataFrame, matrix: np.array, lookback: int = 10) -> Tuple[np.array, np.array]:
+    test_arr = np.zeros((10,50))
+    x,y = get_x_y(test_arr, 8)
