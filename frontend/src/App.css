@@ -61,3 +61,11 @@
   color: #fff9fb;
   border-radius: 15px;
 }
+
+#list h4 {
+  font-family: "Playfair Display", sans-serif;
+  font-size: 1rem;
+  line-height: 1.35;
+  /* background-color: #cccccc; */
+  border-radius: 15px;
+}

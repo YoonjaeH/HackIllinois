@@ -1,6 +1,6 @@
 import './App.css';
 import React,{useState, useEffect} from 'react';
-import { Map, GoogleApiWrapper, Circle } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Circle, Marker } from 'google-maps-react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -14,13 +14,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     overflow: 'auto',
-    height: "71vh"
+    height: "68vh"
   },
 }));
 
 function App({google}) {
+  const statVisible = useState({});
   const classes = useStyles();
-   useEffect(() => { document.body.style.backgroundColor = '#252627' }, [])
+   useEffect(() => { document.body.style.backgroundColor = '#252627'}, [])
   return (
     <div className="App"> 
       <div id="header">
@@ -46,12 +47,15 @@ function App({google}) {
                   strokeColor='transparent'
                   strokeOpacity={0}
                   strokeWeight={5}
+                  onClick={() => console.log('click')}
+                  onMouseover={(props) => console.log(props.center)}
                   fillColor='red'
                   fillOpacity={0.6}/>
               </Map>
             </div>
             <div id="space"></div>
             <div id="list">
+              <h4>Past Occurence</h4>
               <List  className = {classes.root}>
                 {test.map(({state, number})=>(
                   <ListItem key ={state}>
